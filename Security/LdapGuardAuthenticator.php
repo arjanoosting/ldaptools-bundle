@@ -298,10 +298,12 @@ class LdapGuardAuthenticator extends AbstractGuardAuthenticator
     protected function getRequestUsername(Request $request)
     {
         if ($this->options['http_basic']) {
-            return $request->server->get('PHP_AUTH_USER');
+            $username = $request->server->get('PHP_AUTH_USER');
         } else{
-            return $this->getRequestParameter($this->options['username_parameter'], $request);
+            $username = $this->getRequestParameter($this->options['username_parameter'], $request);
         }
+
+        return trim($username);
     }
 
     /**
